@@ -1,0 +1,64 @@
+{
+	"name": "SpamWatch",
+	"version": "0.1.0",
+	"author": [
+		"[https://meta.wikimedia.org/wiki/User:TheresNoTime Sammy Fox]",
+		"..."
+	],
+	"url": "todo",
+	"namemsg": "spamwatch-extensionname",
+	"descriptionmsg": "spamwatch-desc",
+	"license-name": "GPL-2.0-or-later",
+	"type": "parserhook",
+	"requires": {
+		"MediaWiki": ">= 1.43"
+	},
+	"MessagesDirs": {
+		"TemplateData": [
+			"i18n"
+		]
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\SpamWatch\\": "includes/"
+	},
+	"HookHandlers": {
+		"SpamWatchHooks": {
+			"class": "MediaWiki\\Extension\\SpamWatch\\Hooks\\SpamWatchHooks",
+			"services": [
+				"MainConfig"
+			]
+		},
+		"DatabaseHooks": {
+			"class": "MediaWiki\\Extension\\SpamWatch\\Hooks\\DatabaseHooks"
+		}
+	},
+	"Hooks": {
+		"LoadExtensionSchemaUpdates": "DatabaseHooks",
+		"PageSaveComplete": "SpamWatchHooks"
+	},
+	"JobClasses": {
+		"LogLinkJob": "MediaWiki\\Extension\\SpamWatch\\Jobs\\LogLinkJob"
+	},
+	"config": {
+		"SpamWatchNamespaces": {
+			"value": [],
+			"description": "Namespaces where SpamWatch is enabled (overridden by SpamWatchAllNamespaces)"
+		},
+		"SpamWatchAllNamespaces": {
+			"value": true,
+			"description": "Enable SpamWatch on all namespaces (overriding SpamWatchNamespaces)"
+		}
+	},
+	"AvailableRights": [
+		"spamwatch-override"
+	],
+	"GroupPermissions": {
+		"*": {
+			"spamwatch-override": false
+		},
+		"sysop": {
+			"spamwatch-override": true
+		}
+	},
+	"manifest_version": 2
+}
